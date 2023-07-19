@@ -9,7 +9,6 @@ const cartReducer = (state, action) => {
         );
 
         if (existingProduct) {
-            console.log('yes')
             let updateProduct = state.cart.map((curElem) => {
                 if (curElem.id ===   id ) {
                     let newAmount = curElem.amount + amount;
@@ -35,7 +34,7 @@ const cartReducer = (state, action) => {
                 name: product.name,
                 color,
                 amount,
-                image: product.image[0].image,
+                image: product.image,
                 price: product.selling_price,
                 max:product.quantity,
             }
