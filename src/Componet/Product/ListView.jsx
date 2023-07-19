@@ -10,16 +10,16 @@ const ListView = ({products}) => {
       <div className="grid container">
         {
           products.map((curElem)=>{
-            const { id, name, price, image, description } = curElem;
+            const { id, name, selling_price, image, description } = curElem;
             
             return (
               <div className="card grid grid-two-column">
                 <figure>
-                  <img src={image} alt={name} />
+                  <img src={'http://127.0.0.1:8000/uploads/product/'+image} alt={name} />
                 </figure>
                 <div className="card-data">
                   <h3>{name}</h3>
-                  <p><FormatPrice price={price}/></p>
+                  <p><FormatPrice price={selling_price}/></p>
                   <p>{description.slice(0,130)}...</p>
                   <NavLink className="btn-main" to={`/singleproduct/${id}`}>
                     <Button className='btn'>

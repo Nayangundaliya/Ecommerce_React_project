@@ -3,7 +3,7 @@ const filterReducer = (state, action) => {
     switch (action.type) {
         case "LOAD_FILTER_PRODUCT":
 
-            let priceArr = action.payload.map((curElem)=> curElem.price)
+            let priceArr = action.payload.map((curElem)=> curElem.selling_price)
             let maxPrice = Math.max(...priceArr)
             
             return {
@@ -37,7 +37,7 @@ const filterReducer = (state, action) => {
 
             if (state.sorting_value === "lowest") {
                 const sortingProduct = (a, b) => {
-                    return a.price - b.price;
+                    return a.selling_price - b.selling_price;
                 };
 
                 newSortData = tempSortProduct.sort(sortingProduct);
@@ -45,7 +45,7 @@ const filterReducer = (state, action) => {
 
             if (state.sorting_value === "heighest") {
                 const sortingProduct = (a, b) => {
-                    return b.price - a.price;
+                    return b.selling_price - a.selling_price;
                 };
 
                 newSortData = tempSortProduct.sort(sortingProduct);
@@ -85,17 +85,16 @@ const filterReducer = (state, action) => {
             let { all_products } = state;
             let tempFilterProduct = [...all_products];
 
-            const { text, category, color, price } = state.filters;
-
+            const { text, brand, color, selling_price } = state.filters;
             if (text) {
                 tempFilterProduct = tempFilterProduct.filter((curElem) => {
                     return curElem.name.toLowerCase().includes(text.toLowerCase());
                 });
             }
 
-            if (category !== "all") {
+            if (brand !== "all") {
                 tempFilterProduct = tempFilterProduct.filter((curElem) => {
-                    return curElem.category === category;
+                    return curElem.brand === brand;
                 })
             }
 
@@ -105,8 +104,8 @@ const filterReducer = (state, action) => {
                 })
             }
 
-            if (price) {
-                tempFilterProduct = tempFilterProduct.filter((curElem) => curElem.price <= price);
+            if (selling_price) {
+                tempFilterProduct = tempFilterProduct.filter((curElem) => curElem.selling_price <= selling_price);
             }
 
             return {

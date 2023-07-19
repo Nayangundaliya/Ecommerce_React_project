@@ -11,31 +11,36 @@ import FormatPrice from '../Helpers/FormatPrice';
 import Starreview from './Starreview';
 import Addtocart from '../Cart/Addtocart';
 
-const API = "https://api.pujakaitem.com/api/products";
+// const API = "https://api.pujakaitem.com/api/products";
+const API = 'http://127.0.0.1:8000/api/v1/product';
 
 const SingleProduct = () => {
 
   const { getSingleProduct, isSingleLoding, singleProduct } = useProductContex();
-
   const { id } = useParams();
-
   useEffect(() => {
-    getSingleProduct(`${API}?id=${id}`);
+    getSingleProduct(`${API}/${id}`);
   }, []);
 
   const {
-    id:
-    // alias,
     name,
-    company,
-    price,
+    slug,
+    selling_price,
     description,
-    // category,
+    category_id,
+    category,
+    brand,
     stock,
     stars,
     reviews,
     image,
+    images,
+    replacement_days,
+    warranty_year,
+    original_price,
+    quantity,
   } = singleProduct;
+
 
   if (isSingleLoding) {
     return <div className='page_loading'>Loading......</div>
@@ -49,7 +54,7 @@ const SingleProduct = () => {
 
           {/* Product Image */}
           <div className="product_images">
-            <MyImage imgs={image} />
+            <MyImage imgs={images} />
           </div>
 
           {/* Product Ditels */}
@@ -58,11 +63,11 @@ const SingleProduct = () => {
             <Starreview stars={stars} reviews={reviews} />
             <p className="product-data-price">
               MRP:<del>
-                <FormatPrice price ={price + 250000 } />
+                <FormatPrice price ={original_price} />
               </del>
             </p>
             <p className="product-data-price product-data-real-price">
-              Deal of the Day: <FormatPrice price={price}/>
+              Deal of the Day: <FormatPrice price={selling_price}/>
             </p>
             <p>{description}</p>
             <div className="product-data-warranty">
@@ -74,7 +79,7 @@ const SingleProduct = () => {
 
               <div className="product-warranty-data">
                 <TbReplace className='warranty-icon' />
-                <p>7 Days Replacement</p>
+                <p>{ replacement_days } Days Replacement</p>
               </div>
 
               <div className="product-warranty-data">
@@ -84,23 +89,23 @@ const SingleProduct = () => {
 
               <div className="product-warranty-data">
                 <MdSecurity className='warranty-icon' />
-                <p>2 Year Warranty</p>
+                <p>{ warranty_year } Year Warranty</p>
               </div>
 
             </div>
             <div className="product-data-info">
               <p>
-                Available: <span> {stock > 0 ? "In Stock" : "Not Available"} </span>
+                Available: <span> {quantity > 0 ? "In Stock" : "Not Available"} </span>
               </p>
               <p>
                 ID: <span> {id} </span>
               </p>
               <p>
-                Brand: <span> {company} </span>
+                Brand: <span> {brand} </span>
               </p>
             </div>
             <hr />
-            {stock > 0 && <Addtocart product={singleProduct}/>}
+            {quantity > 0 && <Addtocart product={singleProduct}/>}
           </div>
 
         </div>

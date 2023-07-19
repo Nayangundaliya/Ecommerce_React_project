@@ -4,8 +4,7 @@ import FormatPrice from '../Helpers/FormatPrice'
 import CartAmountToggle from './CartAmountToggle'
 import { useCartContext } from '../contex/cartContext'
 
-const CartItem = ({ id, name, image, color, price, amount }) => {
-
+const CartItem = ({ id, name, image, price, amount }) => {
   const { removeItem, setDecrease, setIncrease } = useCartContext();
 
   return (
@@ -13,18 +12,18 @@ const CartItem = ({ id, name, image, color, price, amount }) => {
       <div className="cart-image--name">
         <div>
           <figure>
-            <img src={image} alt={id} />
+            <img src={'http://127.0.0.1:8000/uploads/product/'+image} alt={id} />
           </figure>
         </div>
         <div>
           <p>{name}</p>
-          <div className="color-div">
+          {/* <div className="color-div">
             <p>Color:</p>
             <div
               className="color-style"
               style={{ backgroundColor: color, color: color }}>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

@@ -4,12 +4,14 @@ const cartReducer = (state, action) => {
         let { id, color, amount, product } = action.payload;
         
         let existingProduct = state.cart.find(
-            (curItem) => curItem.id === id + color
+
+            (curItem) => curItem.id === id
         );
 
         if (existingProduct) {
+            console.log('yes')
             let updateProduct = state.cart.map((curElem) => {
-                if (curElem.id ===   id + color) {
+                if (curElem.id ===   id ) {
                     let newAmount = curElem.amount + amount;
                     if (newAmount >= curElem.max) {
                         newAmount = curElem.max;
@@ -29,13 +31,13 @@ const cartReducer = (state, action) => {
         } else {
             let cartProduct;
             cartProduct= {
-                id: id + color,
+                id: id,
                 name: product.name,
                 color,
                 amount,
-                image: product.image[0].url,
-                price: product.price,
-                max:product.stock,
+                image: product.image[0].image,
+                price: product.selling_price,
+                max:product.quantity,
             }
 
             return {

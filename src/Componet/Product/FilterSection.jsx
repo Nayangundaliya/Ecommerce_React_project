@@ -6,7 +6,7 @@ import FormatPrice from '../Helpers/FormatPrice';
 import { Button } from '../Button';
 
 const FilterSection = () => {
-  const { filters: { text, category, color, price, maxPrice, minPrice }, all_products, updateFilterValue, clearFilters} = useFilterContext();
+  const { filters: { text, category, color, selling_price, maxPrice, minPrice }, all_products, updateFilterValue, clearFilters} = useFilterContext();
 
   const getUniqueData = (data, property) => {
     let newVal = data.map((curElem) => {
@@ -58,51 +58,51 @@ const FilterSection = () => {
           })}
         </div>
       </div>
-      <div className="filter-colors colors">
-        <h3>Colors</h3>
-        <div className="filter-color-style">
-          {
-            colorsData.map((curColor, index) => {
-              if (curColor === "all") {
+        {/* <div className="filter-colors colors">
+          <h3>Colors</h3>
+          <div className="filter-color-style">
+            {
+              colorsData.map((curColor, index) => {
+                if (curColor === "all") {
+                  return (
+                    <button
+                      key={index}
+                      type="button"
+                      value={curColor}
+                      name="color"
+                      className="color-all--style"
+                      onClick={updateFilterValue}>
+                      all
+                    </button>
+                  );
+                }
                 return (
                   <button
                     key={index}
                     type="button"
                     value={curColor}
                     name="color"
-                    className="color-all--style"
+                    style={{ backgroundColor: curColor }}
+                    className={color === curColor ? "btnStyle active" : "btnStyle"}
                     onClick={updateFilterValue}>
-                    all
+                    {color === curColor ? <FaCheck className="checkStyle" /> : null}
                   </button>
                 );
-              }
-              return (
-                <button
-                  key={index}
-                  type="button"
-                  value={curColor}
-                  name="color"
-                  style={{ backgroundColor: curColor }}
-                  className={color === curColor ? "btnStyle active" : "btnStyle"}
-                  onClick={updateFilterValue}>
-                  {color === curColor ? <FaCheck className="checkStyle" /> : null}
-                </button>
-              );
-            })
-          }
-        </div>
-      </div>
+              })
+            }
+          </div>
+        </div> */}
 
       <div className="filter_price">
         <h3>Price</h3>
         <p>
-          <FormatPrice price={price} />
+          <FormatPrice price={600000} />
         </p>
         <input type="range"
           name='price'
           max={maxPrice}
           min={minPrice}
-          value={price}
+          value={selling_price}
           onChange={updateFilterValue } />
       </div>
 
