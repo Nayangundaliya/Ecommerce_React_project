@@ -6,14 +6,34 @@ import styled from 'styled-components';
 import { useCartContext } from './contex/cartContext';
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button } from './Button';
+import swal from 'sweetalert';
+import axios from 'axios';
 
 const Navbar = () => {
-  const [menuIcon, setMenuIcon] = useState();
-  const { total_item } = useCartContext();
+    const [menuIcon, setMenuIcon] = useState();
+    const { total_item } = useCartContext();
 
-  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
+    var AuthButton = '';
 
-  const Nav = styled.nav`
+    const logoutSubmit = (e) => {
+        e.preventDefault();
+        axios.post(`http://127.0.0.1:8000/api/v1/logout`).then(res => {
+
+            console.log(res.data.token)
+            if (res.data.status === 200) {
+                localStorage.removeItem('auth_token');
+                // localStorage.romoveItem('auth_name');
+                // localStorage.romoveItem('data', []);
+
+                swal("Success", res.data.message, "success");
+                window.location = '/e-commerce';
+            } else {
+                // setFirstname(res.data.message)
+            }
+        });
+    }
+
+    const Nav = styled.nav`
     .navbar-lists {
       display: flex;
       gap: 4.8rem;
@@ -144,81 +164,87 @@ const Navbar = () => {
       }
     }
   `;
-  return (
-    <Nav>
-      <div className={menuIcon ? "navbar active" : "navbar"}>
-        <ul className="navbar-lists">
-          <li>
-            <NavLink
-              to="/"
-              className="navbar-link "
-              onClick={() => setMenuIcon(false)}>
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/product"
-              className="navbar-link "
-              onClick={() => setMenuIcon(false)}>
-              Products
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/about"
-              className="navbar-link "
-              onClick={() => setMenuIcon(false)}>
-              About
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/contact"
-              className="navbar-link "
-              onClick={() => setMenuIcon(false)}>
-              Contact
-            </NavLink>
-          </li>
-          <li>
-          {
-            isAuthenticated && <h4 style={{ color:'rgb(98, 84, 243)' }}>{ user.name}</h4>
-            }
-          </li>
-          {
-            isAuthenticated ? (<li>
-              <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
-                Log Out
-              </Button>
-            </li>) :
-              (<li><Button onClick={() => loginWithRedirect()}>Log In</Button></li>)
-          }
+    return (
+        <Nav>
+            <div className={menuIcon ? "navbar active" : "navbar"}>
+                <ul className="navbar-lists">
+                    <li>
+                        <NavLink
+                            to="/"
+                            className="navbar-link "
+                            onClick={() => setMenuIcon(false)}>
+                            Home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/product"
+                            className="navbar-link "
+                            onClick={() => setMenuIcon(false)}>
+                            Products
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/about"
+                            className="navbar-link "
+                            onClick={() => setMenuIcon(false)}>
+                            About
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/contact"
+                            className="navbar-link "
+                            onClick={() => setMenuIcon(false)}>
+                            Contact
+                        </NavLink>
+                    </li>
+                    <li>
 
+                        {
+                            !localStorage.getItem('auth_token') ?
+                                AuthButton = ( <ul className="navbar-lists">
+                                    <li>
+                                        <NavLink to="/login" className="navbar-link cart-trolley--link">
+                                            <Button>Login</Button>
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/register" className="navbar-link cart-trolley--link">
+                                            <Button>Register</Button>
+                                        </NavLink>
+                                    </li>
+                                </ul>) : AuthButton =  ( <li>
+                                    <Button onClick={logoutSubmit}>Logout</Button>
+                            </li>)
+                        }
+                    </li>
 
-          <li>
-            <NavLink to="/cart" className="navbar-link cart-trolley--link">
-              <FiShoppingCart className="cart-trolley" />
-              <span className="cart-total--item"> {total_item} </span>
-            </NavLink>
-          </li>
-        </ul>
+                    <li>
+                        <NavLink to="/cart" className="navbar-link cart-trolley--link">
+                            <FiShoppingCart className="cart-trolley" />
+                            <span className="cart-total--item"> {total_item} </span>
+                        </NavLink>
+                    </li>
+                </ul>
 
-        {/* two button for open and close of menu */}
-        <div className="mobile-navbar-btn">
-          <CgMenu
-            name="menu-outline"
-            className="mobile-nav-icon"
-            onClick={() => setMenuIcon(true)}
-          />
-          <CgClose
-            name="close-outline"
-            className="mobile-nav-icon close-outline"
-            onClick={() => setMenuIcon(false)}
-          />
-        </div>
-      </div>
-    </Nav>
-  );
+                {/* two button for open and close of menu */}
+                <div className="mobile-navbar-btn">
+                    <CgMenu
+                        name="menu-outline"
+                        className="mobile-nav-icon"
+                        onClick={() => setMenuIcon(true)}
+                    />
+                    <CgClose
+                        name="close-outline"
+                        className="mobile-nav-icon close-outline"
+                        onClick={() => setMenuIcon(false)}
+                    />
+                </div>
+            </div>
+        </Nav>
+    );
 };
 
 export default Navbar;

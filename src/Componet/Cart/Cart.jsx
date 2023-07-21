@@ -48,10 +48,15 @@ const Cart = () => {
         </div>
         <hr />
         <div className="cart-two-button">
-          <NavLink to="/product">
-            <Button>Continue Shopping</Button>
-          </NavLink>
-          <Button className='btn btn-clear' onClick={clearCart}>Clear Cart</Button>
+          <div>
+            <NavLink to="/product">
+              <Button Button className='m-2'>Continue Shopping</Button>
+            </NavLink>
+            <NavLink to="/">
+              <Button className='btn-buynow m-2'>Buy Now</Button>
+            </NavLink>
+          </div>
+          <Button className='btn btn-clear m-2' onClick={clearCart}>Clear Cart</Button>
         </div>
         <div className="order-total--amount">
           <div className="order-total--subdata">
@@ -149,13 +154,17 @@ const Wrapper = styled.section`
     }
   }
   .cart-two-button {
-    margin-top: 2rem;
+    margin: 2rem;
     display: flex;
     justify-content: space-between;
     .btn-clear {
       background-color: #e74c3c;
     }
+    
   }
+  .btn-buynow {
+      background-color: #FF9F00;
+    }
   .amount-toggle {
     display: flex;
     justify-content: center;
