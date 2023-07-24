@@ -11,7 +11,7 @@ import Header from './Componet/Header';
 import Foot from './Componet/Foot';
 import { GlobalStyle } from './GlobalStyle';
 import { ThemeProvider } from 'styled-components';
-
+import Checkout from './Componet/Checkout';
 function App() {
 
   const theme = {
@@ -51,6 +51,7 @@ function App() {
           <Route path='singleproduct/:id' element={<SingleProduct />} />
           <Route path='cart' element={<Cart />} />
           <Route path='contact' element={<Contact />} />
+          <Route path='checkout' element={<Checkout />} />
           <Route
             path="*"
             element={<Navigate to="e-commerce/" replace />}
