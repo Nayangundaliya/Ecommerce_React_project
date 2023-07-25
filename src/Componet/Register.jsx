@@ -40,6 +40,7 @@ const Register = () => {
                     localStorage.setItem('auth_token', res.data.token);
                     localStorage.setItem('auth_name', res.data.first_name);
                     localStorage.setItem('user_id', res.data.id);
+                    localStorage.setItem('user_email', res.data.email);
 
                     swal("Success", res.data.message, "success");
                     window.location = '/e-commerce';
@@ -57,7 +58,7 @@ const Register = () => {
                     <br />
                     <h1 className='mb-4'>Register</h1>
                     <input type="text" name='first_name' value={first_name} onChange={(e) => setFirstname(e.target.value)} className='form-control' placeholder='First Name' />
-                    <span>{}</span>
+                    {/* <span>{}</span> */}
                     <br />
                     <input type="text" name='last_name' value={last_name} onChange={(e) => setLastname(e.target.value)}  className='form-control' placeholder='Last Name' />
                     <br />

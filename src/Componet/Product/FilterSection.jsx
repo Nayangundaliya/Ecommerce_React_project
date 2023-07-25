@@ -6,41 +6,42 @@ import FormatPrice from '../Helpers/FormatPrice';
 import { Button } from '../Button';
 
 const FilterSection = () => {
-  const { filters: { text, category, color, selling_price, maxPrice, minPrice }, all_products, updateFilterValue, clearFilters} = useFilterContext();
+    const { filters: { text, category, color, selling_price, price, maxPrice, minPrice }, all_products, updateFilterValue, clearFilters } = useFilterContext();
 
-  const getUniqueData = (data, property) => {
-    let newVal = data.map((curElem) => {
-      return curElem[property];
-    });
+    const getUniqueData = (data, property) => {
+        let newVal = data.map((curElem) => {
+            return curElem[property];
+        });
 
-    if (property === "colors") {
-      // return (newVal = ["All", ...new Set([].concat(...newVal))]);
-      newVal = newVal.flat();
+        if (property === "colors") {
+            // return (newVal = ["All", ...new Set([].concat(...newVal))]);
+            newVal = newVal.flat();
+        }
+
+        return newVal = ["all", ...new Set(newVal)];
+
     }
 
-    return newVal = ["all", ...new Set(newVal)];
+    // Unique Data
+    const categoryData = getUniqueData(all_products, "category");
+    const brandData = getUniqueData(all_products, "brand");
+    const colorsData = getUniqueData(all_products, "colors");
 
-  }
+    return (
+        <Wrapper>
+            <div className="filter-search">
+                <form onSubmit={(e) => e.preventDefault()}>
+                    <input
+                        type="text"
+                        name="text"
+                        value={text}
+                        onChange={updateFilterValue}
+                        placeholder="Search"
+                    />
+                </form>
+            </div>
 
-  // Unique Data
-  const categoryData = getUniqueData(all_products, "category");
-  const colorsData = getUniqueData(all_products, "colors");
-
-  return (
-    <Wrapper>
-      <div className="filter-search">
-        <form onSubmit={(e) => e.preventDefault()}>
-          <input
-            type="text"
-            name="text"
-            value={text}
-            onChange={updateFilterValue}
-            placeholder="Search"
-          />
-        </form>
-      </div>
-
-      <div className="filter-category">
+            {/* <div className="filter-category">
         <h3>Category</h3>
         <div>
           {categoryData.map((curElem, index) => {
@@ -57,8 +58,22 @@ const FilterSection = () => {
             );
           })}
         </div>
-      </div>
-        {/* <div className="filter-colors colors">
+      </div> */}
+            <div className="filter-company">
+                <h3>Company</h3>
+                <form action="#">
+                    <select name="brand" id="brand" className='filter-company--select' onClick={updateFilterValue}>
+                        {
+                            brandData.map((curElem, index) => {
+                                return (
+                                    <option key={index} name='brand' value={curElem}>{curElem }</option>
+                                )
+                            })
+                        }
+                    </select>
+                </form>
+            </div>
+            {/* <div className="filter-colors colors">
           <h3>Colors</h3>
           <div className="filter-color-style">
             {
@@ -93,24 +108,24 @@ const FilterSection = () => {
           </div>
         </div> */}
 
-      <div className="filter_price">
-        <h3>Price</h3>
-        <p>
-          <FormatPrice price={600000} />
-        </p>
-        <input type="range"
-          name='price'
-          max={maxPrice}
-          min={minPrice}
-          value={selling_price}
-          onChange={updateFilterValue } />
-      </div>
+            <div className="filter_price">
+                <h3>Price</h3>
+                <p>
+                    <FormatPrice price={selling_price} />
+                </p>
+                <input type="range"
+                    name='selling_price'
+                    max={maxPrice}
+                    min={minPrice}
+                    value={selling_price}
+                    onChange={updateFilterValue} />
+            </div>
 
-      <div className="filter-clear">
-        <Button className='btn' onClick={clearFilters}>Clear Filters</Button>
-      </div>
-    </Wrapper>
-  )
+            <div className="filter-clear">
+                <Button className='btn' onClick={clearFilters}>Clear Filters</Button>
+            </div>
+        </Wrapper>
+    )
 }
 
 const Wrapper = styled.section`

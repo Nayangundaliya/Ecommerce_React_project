@@ -204,7 +204,7 @@ const Navbar = () => {
 
                         {
                             !localStorage.getItem('auth_token') ?
-                                AuthButton = ( <ul className="navbar-lists">
+                                AuthButton = (<ul className="navbar-lists">
                                     <li>
                                         <NavLink to="/login" className="navbar-link cart-trolley--link">
                                             <Button>Login</Button>
@@ -215,9 +215,9 @@ const Navbar = () => {
                                             <Button>Register</Button>
                                         </NavLink>
                                     </li>
-                                </ul>) : AuthButton =  ( <li>
+                                </ul>) : AuthButton = (<li>
                                     <Button onClick={logoutSubmit}>Logout</Button>
-                            </li>)
+                                </li>)
                         }
                     </li>
 

@@ -19,6 +19,7 @@ const Login = () => {
                 localStorage.setItem('auth_token', res.data.token);
                 localStorage.setItem('auth_name', res.data.first_name);
                 localStorage.setItem('user_id', res.data.id);
+                localStorage.setItem('user_email', res.data.email);
 
                 swal("Success", res.data.message, "success");
                 window.location = '/e-commerce';

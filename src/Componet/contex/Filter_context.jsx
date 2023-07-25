@@ -14,7 +14,7 @@ const initialState = {
         category: "all",
         color: "all",
         maxPrice: 0,
-        price: 0,
+        selling_price: 0,
         minPrice: 0,
     },
 }
