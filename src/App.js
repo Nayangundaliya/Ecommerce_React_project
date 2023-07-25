@@ -11,6 +11,7 @@ import Header from './Componet/Header';
 import Foot from './Componet/Foot';
 import { GlobalStyle } from './GlobalStyle';
 import { ThemeProvider } from 'styled-components';
+import Checkout from './Componet/Checkout';
 import Register from './Componet/Register';
 import Login from './Componet/Login';
 import axios from 'axios';
@@ -20,7 +21,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Accept'] = 'application/json';
 
 axios.defaults.withCredentials = true;
-axios.interceptors.request.use(function(config){
+axios.interceptors.request.use(function (config) {
   const token = localStorage.getItem('auth_token');
   config.headers.Authorization = token ? `Bearer ${token}` : ''
   return config;
@@ -65,6 +66,7 @@ function App() {
           <Route path='singleproduct/:id' element={<SingleProduct />} />
           <Route path='cart' element={<Cart />} />
           <Route path='contact' element={<Contact />} />
+          <Route path='checkout' element={<Checkout />} />
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
           <Route
