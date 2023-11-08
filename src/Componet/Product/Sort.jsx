@@ -10,16 +10,16 @@ const Sort = () => {
     <Wrapper className='sort-section'>
       <div className="sorting-list--grid">
         <button
-          className={grid_view ? "active sort-btn" : "sort-btn"}
+          className={setGridView ? "active sort-btn" : "sort-btn"}
           onClick={setGridView}>
           <BsFillGridFill className="icon" />
         </button>
 
-        <button
+        {/* <button
           className={!grid_view ? "active sort-btn" : " sort-btn"}
           onClick={setListView}>
           <BsList className="icon" />
-        </button>
+        </button> */}
       </div>
       <div className="product-data">
         <p>{`${filter_products.length} Available Product` }</p>

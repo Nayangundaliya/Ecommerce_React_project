@@ -26,6 +26,7 @@ const SingleProduct = () => {
     name,
     slug,
     selling_price,
+    small_description,
     description,
     category_id,
     category,
@@ -66,9 +67,11 @@ const SingleProduct = () => {
                 <FormatPrice price ={original_price} />
               </del>
             </p>
-            <p className="product-data-price product-data-real-price">
+            <h2 className="product-data-price product-data-real-price">
               Deal of the Day: <FormatPrice price={selling_price}/>
-            </p>
+            </h2>
+            <p>{small_description}</p>
+            
             <p>{description}</p>
             <div className="product-data-warranty">
 

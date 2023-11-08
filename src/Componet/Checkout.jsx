@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Button } from './Button';
 import axios from 'axios';
 import { useState } from 'react';
+import swal from 'sweetalert';
+
 function Checkout() {
 
   const [error, setError] = useState();
@@ -34,46 +36,70 @@ function Checkout() {
     }
   `;
 
+
+
+
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const data = new FormData(e.currentTarget);
-    const actualData = {
-      first_name: data.get('first_name'),
-      last_name: data.get('last_name'),
-      phone_no: data.get('phone_no'),
-      dilevary_address_city: data.get('dilevary_address_city'),
-      dilevary_address_state: data.get('dilevary_address_state'),
-      pincode: data.get('pincode'),
-      dilivary_address: data.get('dilivary_address'),
 
-    }
+    var userid = localStorage.getItem('auth_token') ? localStorage.getItem('user_id') : '';
+    const productdata = localStorage.getItem('auth_token') ? localStorage.getItem('data') : '';
+    var token = localStorage.getItem('auth_token')
 
+    const product = JSON.parse(productdata);
 
-    const LoginService = async (data) => {
-      return await axios({
-        method: "POST",
-        url: `http://127.0.0.1:8000/api/v1/order`,
-        headers: {
-          'authorization': `Bearer 7|f84vIHobtzP83IAYpgppEerPA84gYqaXGLjJI85n`,
-        },
-        data: data
+    product.map((e) => {
+      var productid = e.id;
+      var price = e.price;
+      var quant = e.amount;
+
+      const actualData = {
+        first_name: data.get('first_name'),
+        last_name: data.get('last_name'),
+        phone_no: data.get('phone_no'),
+        dilivary_address: data.get('dilivary_address'),
+        pincode: data.get('pincode'),
+        customer_id: userid,
+        product_id: productid,
+        total_prise: price * quant,
+        total_quantaty: quant,
+
+      }
+      console.log(actualData)
+
+      const LoginService = async (data) => {
+        return await axios({
+          method: "POST",
+          url: `http://127.0.0.1:8000/api/v1/order`,
+          headers: {
+            'authorization': `Bearer ${token}`,
+          },
+          data: data
+        });
+      }
+
+      LoginService(actualData).then((res) => {
+        if (res.data.status_code === 200) {
+          console.log('a')
+          swal("Success", res.data.message, "success");
+        }
+        else if (res.data.status_code === 401) {
+          setError(res.data.message);
+        }
+        console.log(res)
+      }).catch((error) => {
+        console.log("Somting went wrong")
+        console.log(error.message);
       });
-    }
+    })
 
-    LoginService(actualData).then((res) => {
-      if (res.data.status_code === 200) {
 
-        setError([]);
 
-      }
-      else {
-        setError(res.data.message);
-      }
-      console.log(res)
-    }).catch((error) => {
-      console.log("Somting went wrong")
-      console.log(error.message);
-    });
 
   }
 
@@ -92,10 +118,8 @@ function Checkout() {
                 <input
                   type="text"
                   name="first_name"
-                  // value={}
                   placeholder="First Name"
                   autoComplete="off"
-                //required
                 />
                 <small className="text-danger d-block">{error?.first_name}</small>
               </div>
@@ -103,10 +127,8 @@ function Checkout() {
                 <input
                   type="text"
                   name="last_name"
-                  // value={isAuthenticated ? user.email : ""}
                   placeholder="Last Name"
                   autoComplete="off"
-                // required
                 />
                 <small className="text-danger d-block">{error?.last_name}</small>
               </div>
@@ -116,52 +138,22 @@ function Checkout() {
             <input
               type="text"
               name="phone_no"
-              // value={isAuthenticated ? user.email : ""}
               placeholder="Phone No"
               autoComplete="off"
-            // required
             />
             <small className="text-danger">{error?.phone_no}</small>
-            <div className="mb-3 d-flex justify-content-between">
-              <div>
-                <input
-                  type="text"
-                  name="dilevary_address_city"
-                  // value={isAuthenticated ? user.email : ""}
-                  placeholder="city"
-                  autoComplete="off"
-                // required
-                />
-                <small className="text-danger d-block">{error?.dilevary_address_city}</small>
-              </div>
-              <div>
-                <input
-                  type="text"
-                  name="dilevary_address_state"
-                  // value={isAuthenticated ? user.email : ""}
-                  placeholder="state"
-                  autoComplete="off"
-                // required
-                />
-                <small className="text-danger d-block">{error?.dilevary_address_state}</small>
-              </div>
-
-            </div>
 
             <input
               type="text"
               name="pincode"
-              // value={isAuthenticated ? user.email : ""}
               placeholder="pincode"
               autoComplete="off"
-            // required
             />
             <small className="text-danger">{error?.pincode}</small>
             <textarea
               name="dilivary_address"
               cols="30"
               rows="3"
-              //  required
               autoComplete="off"
               placeholder="Dilivary address"></textarea>
             <small className="text-danger">{error?.dilivary_address}</small>

@@ -12,9 +12,7 @@ const Register = () => {
     const [city, setCity] = useState("");
     const [password, setPassword] = useState("");
     const [password_confirmation, setPasswordconfirmation] = useState("");
-    const [errorlist, setErrorlist] = useState({
-        error_list: []
-    })
+    const [error, setError] = useState("");
     
 
     const registerSubmit = (e) => {
@@ -36,7 +34,7 @@ const Register = () => {
         // });
 
         axios.post(`http://127.0.0.1:8000/api/v1/register`, data).then(res => {
-                if (res.data.status === 200) {
+                if (res.data.status_code === 200) {
                     localStorage.setItem('auth_token', res.data.token);
                     localStorage.setItem('auth_name', res.data.first_name);
                     localStorage.setItem('user_id', res.data.id);
@@ -44,8 +42,13 @@ const Register = () => {
 
                     swal("Success", res.data.message, "success");
                     window.location = '/e-commerce';
-                } else {
-                    setFirstname( res.data.message )
+                }
+                else if (res.data.status_code === 401) {
+                    setError(res.data.message)
+                    swal("Warning", res.data.message, "warning");
+                }
+                else {
+                    setError( res.data.message )
                 }
             });
     }
@@ -58,21 +61,28 @@ const Register = () => {
                     <br />
                     <h1 className='mb-4'>Register</h1>
                     <input type="text" name='first_name' value={first_name} onChange={(e) => setFirstname(e.target.value)} className='form-control' placeholder='First Name' />
-                    {/* <span>{}</span> */}
+                    <small className="text-danger d-block">{error?.first_name}</small>
                     <br />
-                    <input type="text" name='last_name' value={last_name} onChange={(e) => setLastname(e.target.value)}  className='form-control' placeholder='Last Name' />
+                    <input type="text" name='last_name' value={last_name} onChange={(e) => setLastname(e.target.value)} className='form-control' placeholder='Last Name' />
+                    <small className="text-danger d-block">{error?.last_name}</small>
                     <br />
                     <input type="email" name='email' value={email} onChange={(e) => setEmail(e.target.value)} className='form-control' placeholder='Email' />
+                    <small className="text-danger d-block">{error?.email}</small>
                     <br />
-                    <input type="number" name='phone_no' value={phone_no} onChange={(e) => setNumber(e.target.value)}  className='form-control' placeholder='Number' />
+                    <input type="number" name='phone_no' value={phone_no} onChange={(e) => setNumber(e.target.value)} className='form-control' placeholder='Number' />
+                    <small className="text-danger d-block">{error?.phone_no}</small>
                     <br />
-                    <input type="text" name='country' value={country} onChange={(e) => setCountry(e.target.value)}  className='form-control' placeholder='Country' />
+                    <input type="text" name='country' value={country} onChange={(e) => setCountry(e.target.value)} className='form-control' placeholder='Country' />
+                    <small className="text-danger d-block">{error?.country}</small>
                     <br />
                     <input type="text" name='city' value={city} onChange={(e) => setCity(e.target.value)} className='form-control' placeholder='City' />
+                    <small className="text-danger d-block">{error?.city}</small>
                     <br />
-                    <input type="password" name='password' value={password} onChange={(e) => setPassword(e.target.value)}  className='form-control' placeholder='Password' />
+                    <input type="password" name='password' value={password} onChange={(e) => setPassword(e.target.value)} className='form-control' placeholder='Password' />
+                    <small className="text-danger d-block">{error?.password}</small>
                     <br />
-                    <input type="password" name='password_confirmation' value={password_confirmation} onChange={(e) => setPasswordconfirmation(e.target.value)}  className='form-control' placeholder='Password Confirmation' />
+                    <input type="password" name='password_confirmation' value={password_confirmation} onChange={(e) => setPasswordconfirmation(e.target.value)} className='form-control' placeholder='Password Confirmation' />
+                    <small className="text-danger d-block">{error?.password}</small>
                     <br />
                     <button type='submit' className='btn btn-primary'>Sign UP</button>
                 </div>

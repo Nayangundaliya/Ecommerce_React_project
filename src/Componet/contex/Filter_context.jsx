@@ -22,8 +22,13 @@ const initialState = {
 export const FilterContectProvider = ({ children }) => {
 
     const { products } = useProductContex();
+    console.log(products)
 
     const [state, dispatch] = useReducer(reducer, initialState);
+
+    useEffect(() => {
+        dispatch({ type: "LOAD_FILTER_PRODUCT", payload: products });
+    }, [products]);
 
     // to set the grid view
     const setGridView = () => {
@@ -65,9 +70,7 @@ export const FilterContectProvider = ({ children }) => {
         dispatch({ type: "SORTING_PRODUCTS", payload: products });
     }, [products, state.sorting_value]);
 
-    useEffect(() => {
-        dispatch({ type: "LOAD_FILTER_PRODUCT", payload: products });
-    }, [products]);
+    
 
     return (
         <FilterContext.Provider

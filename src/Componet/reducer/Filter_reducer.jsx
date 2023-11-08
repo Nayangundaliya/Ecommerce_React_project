@@ -19,11 +19,11 @@ const filterReducer = (state, action) => {
                 grid_view: true,
             };
 
-        case "SET_LIST_VIEW":
-            return {
-                ...state,
-                grid_view: false,
-            };
+        // case "SET_LIST_VIEW":
+        //     return {
+        //         ...state,
+        //         grid_view: false,
+        //     };
         
         case "GET_SORT_VALUE":
             return {

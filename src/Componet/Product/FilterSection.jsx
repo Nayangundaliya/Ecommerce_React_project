@@ -74,6 +74,7 @@ const FilterSection = () => {
                 </form>
             </div>
             {/* <div className="filter-colors colors">
+             
           <h3>Colors</h3>
           <div className="filter-color-style">
             {

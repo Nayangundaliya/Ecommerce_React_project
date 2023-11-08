@@ -28,42 +28,15 @@ const Contact = () => {
                 window.location = '/e-commerce';
         });
     }
-
-    const Wrapper = styled.section`
-    padding: 6rem 0 5rem 0;
-    text-align: center;
-    .container {
-      margin-top: 3rem;
-      .contact-form {
-        max-width: 50rem;
-        margin: auto;
-        .contact-inputs {
-          display: flex;
-          flex-direction: column;
-          gap: 3rem;
-          input[type="submit"] {
-            cursor: pointer;
-            transition: all 0.2s;
-            &:hover {
-              background-color: ${({ theme }) => theme.colors.white};
-              border: 1px solid ${({ theme }) => theme.colors.btn};
-              color: ${({ theme }) => theme.colors.btn};
-              transform: scale(0.9);
-            }
-          }
-        }
-      }
-    }
-  `;
     
     
     
 
-    return (
-        <Wrapper>
-            <h3 className="common-heading">Contact page</h3>
+  return (
+      <>
+      <h3 className="common-heading offset-sm-4">Contact page</h3>
 
-            {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118147.86633502778!2d70.66540749304767!3d22.273412567407146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959c98ac71cdf0f%3A0x76dd15cfbe93ad3b!2sRajkot%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1690178674427!5m2!1sen!2sin"
+      {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118147.86633502778!2d70.66540749304767!3d22.273412567407146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959c98ac71cdf0f%3A0x76dd15cfbe93ad3b!2sRajkot%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1690178674427!5m2!1sen!2sin"
                 width="100%"
                 height="400"
                 style={{ border: 0 }}
@@ -72,21 +45,22 @@ const Contact = () => {
                 referrerpolicy="no-referrer-when-downgrade">
             </iframe> */}
 
-            <div className="container">
-                <div className="contact-form">
-                    <form onSubmit={contactSubmit} method='POST' aria-multiline
-                        className="contact-inputs">
-                        <input type="text" placeholder="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+      <div className='col-sm-6 offset-sm-4'>
+        <form onSubmit={contactSubmit} method='POST' aria-multiline className=''>
+          <div className='m-5'>
+            <input type="text" className='m-3 p-3'  name="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="username"  />
+            <br />
+            <input type="email" className='m-3 p-3' name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email"  />
+            <br />
+            <input type='text' className='m-3 p-3' name="message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Enter you message" />
+            <br />
+            <input type="submit" />
+          </div>
 
-                        <input  type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-
-                        <input  type='text' name="message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Enter you message"/>
-
-                        <input type="submit"  />
-                    </form>
-                </div>
-            </div>
-        </Wrapper>
+        </form>
+      </div>
+      </>
+            
     );
 };
 

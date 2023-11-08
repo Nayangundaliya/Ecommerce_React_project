@@ -18,9 +18,7 @@ const Navbar = () => {
     const logoutSubmit = (e) => {
         e.preventDefault();
         axios.post(`http://127.0.0.1:8000/api/v1/logout`).then(res => {
-
-            console.log(res.data.token)
-            if (res.data.status === 200) {
+          if (res.data.status_code === 200) {
                 localStorage.removeItem('auth_token');
                 // localStorage.romoveItem('auth_name');
                 // localStorage.romoveItem('data', []);
@@ -226,6 +224,11 @@ const Navbar = () => {
                             <FiShoppingCart className="cart-trolley" />
                             <span className="cart-total--item"> {total_item} </span>
                         </NavLink>
+                    </li>
+                    <li>
+                        {
+                            localStorage.getItem('auth_token') ? <h2>Hi {localStorage.getItem('auth_name')} !</h2> : ''
+                        }
                     </li>
                 </ul>
 
